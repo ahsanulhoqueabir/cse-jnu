@@ -27,7 +27,7 @@ const fields = [
     name: "course",
     placeholder: "Select the course",
     label: "Select the course",
-    options: ["CSE 101", "CSE 102", "CSE 103"],
+    options: ["CSE 101", "CSE 102", "CSE 103", "Other"],
   },
   {
     type: "date",
@@ -71,6 +71,15 @@ const AddNotice = () => {
     for (let name of formData.keys()) {
       data[name] = formData.get(name);
     }
+    const info = {
+      title: data.title,
+      courseTeacher: data.courseTeacher,
+      course: data.course,
+      date: data.date,
+      time: data.time,
+      room: data.room,
+      description: data.description,
+    };
 
     const dsc = data.description.split(".");
     if (!dsc[dsc.length - 1]) {
@@ -100,6 +109,15 @@ const AddNotice = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
+        });
+        fetch("https://jnu-server-production.up.railway.app/sendMail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            info: info,
+          }),
         });
         Swal.fire({
           title: "added!",

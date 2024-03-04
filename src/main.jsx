@@ -31,6 +31,7 @@ import UpdateInfo2 from "./pages/UpdateInfo/UpdateInfo2.jsx";
 import AddNotes from "./pages/AddNote/AddNotes.jsx";
 import Notices from "./pages/Notices.jsx";
 import AddNotice from "./pages/AdminPanel/AddNotice.jsx";
+import SendEmail from "./pages/AdminPanel/SendEmail.jsx";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -179,6 +180,10 @@ const route = createBrowserRouter([
             <UpdateInfo2 />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "mailing",
+        element: <SendEmail />,
       },
       {
         path: "/login",

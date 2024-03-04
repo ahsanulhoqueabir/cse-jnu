@@ -3,8 +3,7 @@
 [![Instagram][instagram-shield]][instagram-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<h1> A Department Introductory Web Application Using React</h1>
-
+<h1> A Department Introductory Web Application Using MERN</h1>
 
 <!-- Social Media Link -->
 
