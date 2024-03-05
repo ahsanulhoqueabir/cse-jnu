@@ -182,7 +182,7 @@ const route = createBrowserRouter([
         ),
       },
       {
-        path: "mailing",
+        path: "mailinghhhhhhhhhhhhhhh",
         element: <SendEmail />,
       },
       {

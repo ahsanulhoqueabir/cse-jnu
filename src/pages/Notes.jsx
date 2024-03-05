@@ -5,7 +5,7 @@ import LoadingPage from "./LoadingPage";
 import Banner from "../components/Banner";
 
 const Notes = () => {
-  const loading = useNavigation();
+  const [loading, setloading] = useState(false);
   // const allnotes = JSON.parse(useLoaderData());
   const allnotes = useLoaderData();
   const [filterType, setFilterType] = useState("topic");
@@ -14,17 +14,18 @@ const Notes = () => {
   const indexOfLastNotes = currentPage * notePerPage;
   const indexOfFirstNotes = indexOfLastNotes - notePerPage;
   const pageCount = Math.ceil(allnotes.length / notePerPage);
-  const [currentNotes, setCurrentItems] = useState(
+  let [currentNotes, setCurrentItems] = useState(
     allnotes.slice(indexOfFirstNotes, indexOfLastNotes)
   );
-  // const currentNotes = allnotes.slice(indexOfFirstNotes, indexOfLastNotes);
+  // const [currentNotes, setCurrentItems] = useState(
+  //   allnotes.slice(indexOfFirstNotes, indexOfLastNotes)
+  // );
+  // currentNotes = allnotes.slice(indexOfFirstNotes, indexOfLastNotes);
   const numbers = [...Array(pageCount + 1).keys()].slice(1);
 
   const temp = [...allnotes];
   const [notes, setNotes] = useState(temp?.sort(() => Math.random() - 0.5));
-  if (loading === "loading") {
-    return <LoadingPage />;
-  }
+
   const handleFilterType = (e) => {
     e.preventDefault();
     const value = e.target.value;
@@ -40,6 +41,8 @@ const Notes = () => {
     );
     // setNotes(searchResult);
     setCurrentItems(searchResult);
+    // currentNotes = searchResult;
+    setCurrentPage(1);
   };
   // pagination function are here
   const prevPage = () => {
@@ -53,12 +56,14 @@ const Notes = () => {
   const paginate = (number) => {
     setCurrentPage(number);
   };
-
-  if (currentNotes.length === 0) {
-    return <LoadingPage></LoadingPage>;
+  if (loading) {
+    return <LoadingPage />;
   }
+  // if (currentNotes.length === 0) {
+  //   return <LoadingPage></LoadingPage>;
+  // }
   return (
-    <div className="  mx-auto ">
+    <div className="  mx-auto min-h-[calc(100vh)]">
       <Banner>Notes & Slides </Banner>
       <div className="py-10 lg:px-10 flex px-3 flex-col m-0 justify-center items-center">
         <div className="join w-fit">
@@ -90,7 +95,7 @@ const Notes = () => {
         {/* ------------------------------ notes table section ----------------------------- */}
 
         <div id="notes" className=" overflow-x-auto my-5 w-full mx-auto">
-          {notes.length > 0 ? (
+          {currentNotes.length > 0 ? (
             <table className="table border-2 border-black">
               <thead>
                 <tr className="font-bold text-md lg:text-lg">
