@@ -1,5 +1,5 @@
 import React from "react";
-import NoticeBoard from "../components/NoticeBoard";
+import NoticeBoard from "./NoticeBoard";
 
 const Notices = () => {
   return (

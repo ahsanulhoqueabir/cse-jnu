@@ -4,7 +4,7 @@ const SendEmail = () => {
   const handleMail = (e) => {
     e.preventDefault();
     const message = e.target.text.value;
-    fetch("https://jnu-server-production.up.railway.app/sendMail", {
+    fetch("http://localhost:3000/sendMail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

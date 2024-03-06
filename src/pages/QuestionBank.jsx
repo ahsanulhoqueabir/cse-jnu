@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { useLoaderData, useNavigation } from "react-router-dom";
-import LoadingPage from "./LoadingPage";
+import LoadingPage from "./Shared/LoadingPage";
 import Banner from "../components/Banner";
 
 const QuestionBank = () => {

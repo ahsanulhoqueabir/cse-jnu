@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import "./App.css";
-import MyNav from "./components/MyNav";
-import Footer from "./components/Footer";
+import MyNav from "./Shared/MyNav";
+import Footer from "./Shared/Footer";
 import "react-tabs/style/react-tabs.css";
 import AOS from "aos";
 import "aos/dist/aos.css";

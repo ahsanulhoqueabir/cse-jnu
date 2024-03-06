@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "react-router-dom";
-import LoadingPage from "../pages/LoadingPage";
+import LoadingPage from "../pages/Shared/LoadingPage";
 
 const Faculty = () => {
   const [faculty, setFaculty] = useState([]);

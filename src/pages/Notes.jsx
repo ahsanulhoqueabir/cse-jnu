@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { useLoaderData, useNavigation } from "react-router-dom";
-import LoadingPage from "./LoadingPage";
+import LoadingPage from "./Shared/LoadingPage";
 import Banner from "../components/Banner";
 
 const Notes = () => {
@@ -48,13 +48,16 @@ const Notes = () => {
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      setCurrentItems(allnotes.slice(indexOfFirstNotes, indexOfLastNotes));
     }
   };
   const nextPage = () => {
     if (currentPage < pageCount) setCurrentPage(currentPage + 1);
+    setCurrentItems(allnotes.slice(indexOfFirstNotes, indexOfLastNotes));
   };
   const paginate = (number) => {
     setCurrentPage(number);
+    setCurrentItems(allnotes.slice(indexOfFirstNotes, indexOfLastNotes));
   };
   if (loading) {
     return <LoadingPage />;

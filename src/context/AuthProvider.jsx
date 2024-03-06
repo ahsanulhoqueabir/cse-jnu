@@ -17,19 +17,20 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [studentData, setStudentData] = useState([]);
   const [myData, setMyData] = useState(null);
+  const [upcomingNotices, setUpcomingNotices] = useState([]);
 
   const allStudentsMail = studentData.map((student) => student.email);
   useEffect(() => {
-    fetch("https://jnu-server-production.up.railway.app/allDataofCSE13")
+    fetch("http://localhost:3000/allDataofCSE13")
       .then((res) => res.json())
       .then((data) => {
         setStudentData(data);
         setLoading(false);
       });
   }, []);
-  // https://jnu-server-production.up.railway.app/
+  // http://localhost:3000/
   https: useEffect(() => {
-    const url = `https://jnu-server-production.up.railway.app/getMySpecificInfoUsingMail?email=${user?.email}`;
+    const url = `http://localhost:3000/getMySpecificInfoUsingMail?email=${user?.email}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {

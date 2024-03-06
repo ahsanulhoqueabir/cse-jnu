@@ -3,35 +3,38 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import Home from "./components/Home.jsx";
-import Academic from "./components/Academic.jsx";
+import Home from "./pages/Home/Home.jsx";
+import Academic from "./Layout/Academic.jsx";
 import Faculty from "./components/Faculty.jsx";
 import AuthProvider from "./context/AuthProvider.jsx";
-import Students from "./pages/Students.jsx";
-import Portfolio from "./portfolio/Portfolio.jsx";
-import ErrorPage from "./pages/ErrorPage.jsx";
-import Routine from "./components/Routine.jsx";
-import StudentData from "./pages/StudentData.jsx";
-import StudentProfile from "./pages/StudentProfile.jsx";
+import Students from "./pages/StudentID/Students.jsx";
+import Portfolio from "./Portfolio/Portfolio.jsx";
+import ErrorPage from "./pages/Shared/ErrorPage.jsx";
+import Routine from "./pages/Routine.jsx";
+import StudentData from "./Layout/StudentData.jsx";
+import StudentProfile from "./pages/StudentProfile/StudentProfile.jsx";
 import Notes from "./pages/Notes.jsx";
-import Tutorial from "./pages/Tutorial.jsx";
-import TutorialX from "./pages/TutorialX.jsx";
+import Tutorial from "./pages/Tutorial/Tutorial.jsx";
+import TutorialX from "./pages/Tutorial/TutorialX.jsx";
 import QuestionBank from "./pages/QuestionBank.jsx";
-import TutorialNew from "./pages/TutorialNew.jsx";
+import TutorialNew from "./pages/Tutorial/TutorialNew.jsx";
 import FeaturesLog from "./pages/FeaturesLog.jsx";
 import Login from "./pages/Login.jsx";
-import PrivateRoute from "./pages/PrivateRoute.jsx";
+import PrivateRoute from "./router/PrivateRoute.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AdminPanel from "./pages/AdminPanel.jsx";
-import LoadingPage from "./pages/LoadingPage.jsx";
-import UserProfile from "./pages/UserProfile.jsx";
-import UpdateInfo from "./pages/UpdateInfo/UpdateInfo.jsx";
-import UpdateInfo2 from "./pages/UpdateInfo/UpdateInfo2.jsx";
+import AdminPanel from "./pages/AdminPanel/AdminPanel.jsx";
+import LoadingPage from "./pages/Shared/LoadingPage.jsx";
+import UserProfile from "./pages/MyProfile/ProfileDetails/UserProfile.jsx";
+// import UpdateInfo from "./pages/UpdateInfo/UpdateInfo.jsx";
 import AddNotes from "./pages/AddNote/AddNotes.jsx";
 import Notices from "./pages/Notices.jsx";
-import AddNotice from "./pages/AdminPanel/AddNotice.jsx";
+import AddNotice from "./pages/AdminPanel/Notice/AddNotice.jsx";
 import SendEmail from "./pages/AdminPanel/SendEmail.jsx";
+import NotAuthorized from "./pages/Shared/NotAuthorized.jsx";
+import AdminRoute from "./router/AdminRoute.jsx";
+import UpdateInfo2 from "./pages/MyProfile/UpdateInfo/UpdateInfo2.jsx";
+import NoticeControl from "./pages/AdminPanel/Notice/NoticeControl.jsx";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -60,10 +63,7 @@ const route = createBrowserRouter([
                 <Notes />
               </PrivateRoute>
             ),
-            loader: () =>
-              fetch(
-                "https://jnu-server-production.up.railway.app/allNotesbybatch13"
-              ),
+            loader: () => fetch("http://localhost:3000/allNotesbybatch13"),
           },
           {
             path: "tutorialX",
@@ -118,18 +118,16 @@ const route = createBrowserRouter([
           {
             path: "profileCard",
             element: <StudentProfile />,
-            loader: () =>
-              fetch(
-                "https://jnu-server-production.up.railway.app/allDataofCSE13"
-              ),
+            loader: () => fetch("http://localhost:3000/allDataofCSE13"),
           },
           {
             path: "idCard",
-            element: <Students />,
-            loader: () =>
-              fetch(
-                "https://jnu-server-production.up.railway.app/allDataofCSE13"
-              ),
+            element: (
+              <PrivateRoute>
+                <Students />
+              </PrivateRoute>
+            ),
+            loader: () => fetch("http://localhost:3000/allDataofCSE13"),
           },
         ],
       },
@@ -137,9 +135,7 @@ const route = createBrowserRouter([
         path: "students/profileCard/:id",
         element: <Portfolio />,
         loader: ({ params }) =>
-          fetch(
-            `https://jnu-server-production.up.railway.app/allDataofCSE13/${params.id}`
-          ),
+          fetch(`http://localhost:3000/allDataofCSE13/${params.id}`),
       },
       {
         path: "faculty",
@@ -158,11 +154,12 @@ const route = createBrowserRouter([
         element: <Notices />,
       },
       {
-        path: "addNewNotice",
+        path: "admin/addNewNotice",
         element: (
-          <PrivateRoute>
-            <AddNotice />
-          </PrivateRoute>
+          <AdminRoute>
+            {/* <AddNotice /> */}
+            <NoticeControl />
+          </AdminRoute>
         ),
       },
       {
@@ -194,6 +191,10 @@ const route = createBrowserRouter([
         element: <ErrorPage />,
       },
     ],
+  },
+  {
+    path: "notauthorized",
+    element: <NotAuthorized />,
   },
   {
     path: "/loadingpage",

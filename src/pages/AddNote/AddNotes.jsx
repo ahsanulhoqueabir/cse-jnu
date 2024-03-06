@@ -135,7 +135,7 @@ const AddNotes = () => {
       confirmButtonText: "Yes, Add it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://jnu-server-production.up.railway.app/addYourNotesinDB`, {
+        fetch(`http://localhost:3000/addYourNotesinDB`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
