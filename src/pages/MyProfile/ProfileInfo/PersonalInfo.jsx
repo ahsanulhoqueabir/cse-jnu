@@ -71,13 +71,16 @@ const PersonalInfo = ({ studentData, setStudentData }) => {
       confirmButtonText: "Yes, update it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/UpdateMyData/${studentData._id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedData),
-        });
+        fetch(
+          `https://csejnu-server-production.up.railway.app/UpdateMyData/${studentData._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedData),
+          }
+        );
         setStudentData(updatedData);
         Swal.fire({
           title: "Updated!",

@@ -97,7 +97,7 @@ const MyNav = () => {
       </li>
       {isAdmin && (
         <li>
-          <Link to={"admin/addNewNotice"}>Manage Notice</Link>
+          <Link to={"admin/ManageNotice"}>Manage Notice</Link>
         </li>
       )}
       <li className="p-1 hover:bg-base-200">

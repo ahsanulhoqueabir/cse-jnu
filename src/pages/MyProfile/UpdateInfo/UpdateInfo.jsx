@@ -10,7 +10,9 @@ const UpdateInfo = () => {
   const [studentData, setStudentData] = useState([]);
   const userMail = user?.email;
   useEffect(() => {
-    fetch(`http://localhost:3000/userProfileDetails?email=${userMail}`)
+    fetch(
+      `https://csejnu-server-production.up.railway.app/userProfileDetails?email=${userMail}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setStudentData(data);
@@ -75,13 +77,16 @@ const UpdateInfo = () => {
       confirmButtonText: "Yes, Update it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/UpdateMyData/${_id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        fetch(
+          `https://csejnu-server-production.up.railway.app/UpdateMyData/${_id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
         Swal.fire({
           title: "Updated!",
           text: "Your info has been updated.",

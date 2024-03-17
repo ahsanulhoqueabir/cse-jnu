@@ -67,13 +67,16 @@ const AdminPanel = () => {
       confirmButtonText: "Yes, add it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch("http://localhost:3000/updateStudentData", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        fetch(
+          "https://csejnu-server-production.up.railway.app/updateStudentData",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
         Swal.fire({
           title: "Added!",
           text: "Your data has been added.",

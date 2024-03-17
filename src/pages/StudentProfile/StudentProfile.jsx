@@ -53,7 +53,9 @@ const StudentProfile = () => {
       setStudents([...studentData].sort(() => Math.random() - 0.5));
     } else if (value === "asc") {
       serLoader(true);
-      fetch("http://localhost:3000/getSortedDataofBatch13?sort=asc")
+      fetch(
+        "https://csejnu-server-production.up.railway.app/getSortedDataofBatch13?sort=asc"
+      )
         .then((res) => res.json())
         .then((data) => {
           setOrderType("asc");
@@ -62,7 +64,9 @@ const StudentProfile = () => {
         });
     } else if (value === "dsc") {
       serLoader(true);
-      fetch("http://localhost:3000/getSortedDataofBatch13?sort=dsc")
+      fetch(
+        "https://csejnu-server-production.up.railway.app/getSortedDataofBatch13?sort=dsc"
+      )
         .then((res) => res.json())
         .then((data) => {
           setOrderType("dsc");

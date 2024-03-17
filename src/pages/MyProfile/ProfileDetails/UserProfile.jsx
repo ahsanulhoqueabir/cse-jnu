@@ -13,7 +13,9 @@ const UserProfile = () => {
   const [studentData, setStudentData] = useState([]);
   const userMail = user?.email;
   useEffect(() => {
-    fetch(`http://localhost:3000/userProfileDetails?email=${userMail}`)
+    fetch(
+      `https://csejnu-server-production.up.railway.app/userProfileDetails?email=${userMail}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setStudentData(data);

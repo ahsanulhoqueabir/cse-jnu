@@ -10,7 +10,7 @@ import AuthProvider from "./context/AuthProvider.jsx";
 import Students from "./pages/StudentID/Students.jsx";
 import Portfolio from "./Portfolio/Portfolio.jsx";
 import ErrorPage from "./pages/Shared/ErrorPage.jsx";
-import Routine from "./pages/Routine.jsx";
+import Routine from "./pages/Routine/Routine.jsx";
 import StudentData from "./Layout/StudentData.jsx";
 import StudentProfile from "./pages/StudentProfile/StudentProfile.jsx";
 import Notes from "./pages/Notes.jsx";
@@ -35,6 +35,9 @@ import NotAuthorized from "./pages/Shared/NotAuthorized.jsx";
 import AdminRoute from "./router/AdminRoute.jsx";
 import UpdateInfo2 from "./pages/MyProfile/UpdateInfo/UpdateInfo2.jsx";
 import NoticeControl from "./pages/AdminPanel/Notice/NoticeControl.jsx";
+import UpcomingNotice from "./pages/AdminPanel/Notice/Components/UpcomingNotice.jsx";
+import UpdateNotice from "./pages/AdminPanel/Notice/Components/UpdateNotice.jsx";
+import ClassRoutine from "./pages/Routine/ClassRoutine.jsx";
 const route = createBrowserRouter([
   {
     path: "/",
@@ -48,13 +51,17 @@ const route = createBrowserRouter([
         path: "academic",
         element: <Academic />,
         children: [
+          // {
+          //   path: "routine",
+          //   element: <Routine />,
+          //   loader: () =>
+          //     fetch(
+          //       "https://raw.githubusercontent.com/ahsanul-database/fakeDB/main/routine1312.json"
+          //     ),
+          // },
           {
             path: "routine",
-            element: <Routine />,
-            loader: () =>
-              fetch(
-                "https://raw.githubusercontent.com/ahsanul-database/fakeDB/main/routine1312.json"
-              ),
+            element: <ClassRoutine />,
           },
           {
             path: "notes",
@@ -63,7 +70,10 @@ const route = createBrowserRouter([
                 <Notes />
               </PrivateRoute>
             ),
-            loader: () => fetch("http://localhost:3000/allNotesbybatch13"),
+            loader: () =>
+              fetch(
+                "https://csejnu-server-production.up.railway.app/allNotesbybatch13"
+              ),
           },
           {
             path: "tutorialX",
@@ -118,7 +128,10 @@ const route = createBrowserRouter([
           {
             path: "profileCard",
             element: <StudentProfile />,
-            loader: () => fetch("http://localhost:3000/allDataofCSE13"),
+            loader: () =>
+              fetch(
+                "https://csejnu-server-production.up.railway.app/allDataofCSE13"
+              ),
           },
           {
             path: "idCard",
@@ -127,7 +140,10 @@ const route = createBrowserRouter([
                 <Students />
               </PrivateRoute>
             ),
-            loader: () => fetch("http://localhost:3000/allDataofCSE13"),
+            loader: () =>
+              fetch(
+                "https://csejnu-server-production.up.railway.app/allDataofCSE13"
+              ),
           },
         ],
       },
@@ -135,7 +151,9 @@ const route = createBrowserRouter([
         path: "students/profileCard/:id",
         element: <Portfolio />,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/allDataofCSE13/${params.id}`),
+          fetch(
+            `https://csejnu-server-production.up.railway.app/allDataofCSE13/${params.id}`
+          ),
       },
       {
         path: "faculty",
@@ -154,13 +172,31 @@ const route = createBrowserRouter([
         element: <Notices />,
       },
       {
-        path: "admin/addNewNotice",
+        path: "admin/ManageNotice",
         element: (
           <AdminRoute>
             {/* <AddNotice /> */}
             <NoticeControl />
           </AdminRoute>
         ),
+        children: [
+          {
+            path: "",
+            element: <UpcomingNotice />,
+          },
+          {
+            path: "UpdateNotice/:id",
+            element: <UpdateNotice />,
+          },
+          {
+            path: "addNew",
+            element: <AddNotice />,
+          },
+          {
+            path: "SendMail",
+            element: <SendEmail />,
+          },
+        ],
       },
       {
         path: "AddNote",

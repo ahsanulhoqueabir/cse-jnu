@@ -8,7 +8,7 @@ const NoticeBox = () => {
   const [notice, setNotice] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:3000/upcomingNotices")
+    fetch("https://csejnu-server-production.up.railway.app/upcomingNotices")
       .then((res) => res.json())
       .then((data) => {
         setNotice(data);
@@ -51,7 +51,7 @@ const NoticeBox = () => {
       <div className="h-[450px] bg-teal-100 p-3 lg:p-10 rounded-lg shadow-lg shadow-green-500">
         <section className="py-5 relative">
           {notice.map((card, index) => (
-            <div>
+            <div key={index}>
               {index % 2 === 0 ? (
                 <div
                   key={index}

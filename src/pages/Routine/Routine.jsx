@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useLoaderData } from "react-router-dom";
-import LoadingPage from "./Shared/LoadingPage";
-import Banner from "../components/Banner";
+import LoadingPage from "../Shared/LoadingPage";
+import Banner from "../../components/Banner";
 
 const Routine = () => {
   const loading = useLoaderData();

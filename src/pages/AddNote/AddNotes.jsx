@@ -135,13 +135,16 @@ const AddNotes = () => {
       confirmButtonText: "Yes, Add it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/addYourNotesinDB`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        fetch(
+          `https://csejnu-server-production.up.railway.app/addYourNotesinDB`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
         Swal.fire({
           title: "Added!",
           text: "Your info has been added to DB.",

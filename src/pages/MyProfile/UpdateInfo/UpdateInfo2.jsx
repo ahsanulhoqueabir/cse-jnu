@@ -11,7 +11,9 @@ const UpdateInfo2 = () => {
   const [userProfilePhoto, setUserProfilePhoto] = useState(null);
   const userMail = user?.email;
   useEffect(() => {
-    fetch(`http://localhost:3000/userProfileDetails?email=${userMail}`)
+    fetch(
+      `https://csejnu-server-production.up.railway.app/userProfileDetails?email=${userMail}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setStudentData(data);
@@ -77,13 +79,16 @@ const UpdateInfo2 = () => {
         //
         // console.log(imgData);
 
-        fetch(`http://localhost:3000/UpdateMyData/${studentData._id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newData),
-        });
+        fetch(
+          `https://csejnu-server-production.up.railway.app/UpdateMyData/${studentData._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newData),
+          }
+        );
 
         Swal.fire({
           title: "Updated!",

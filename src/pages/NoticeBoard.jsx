@@ -57,11 +57,11 @@ const NoticeBoard = () => {
     return <LoadingPage />;
   }
   return (
-    <div>
+    <div className="">
       <h1 className="text-4xl font-bold text-center myText">
-        Notice Board - All Upcoming and Recent Notices
+        Notice Board - All Notices
       </h1>
-      <div className="overflow-x-auto mx-1 py-5">
+      <div className=" overflow-x-auto mx-1 py-5">
         {temp.length > 0 ? (
           <table className="table border-2 border-teal-200 ">
             <thead className="capitalize bg-teal-200 text-black">

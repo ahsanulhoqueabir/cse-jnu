@@ -21,20 +21,29 @@ const AuthProvider = ({ children }) => {
 
   const allStudentsMail = studentData.map((student) => student.email);
   useEffect(() => {
-    fetch("http://localhost:3000/allDataofCSE13")
+    fetch("https://csejnu-server-production.up.railway.app/allDataofCSE13")
       .then((res) => res.json())
       .then((data) => {
         setStudentData(data);
         setLoading(false);
       });
   }, []);
-  // http://localhost:3000/
-  https: useEffect(() => {
-    const url = `http://localhost:3000/getMySpecificInfoUsingMail?email=${user?.email}`;
+  useEffect(() => {
+    const url = `https://csejnu-server-production.up.railway.app/getMySpecificInfoUsingMail?email=${user?.email}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setMyData(data);
+      });
+  }, [user]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("https://csejnu-server-production.up.railway.app/upcomingNotices")
+      .then((res) => res.json())
+      .then((data) => {
+        setUpcomingNotices(data);
+        setLoading(false);
       });
   }, [user]);
 
@@ -69,6 +78,7 @@ const AuthProvider = ({ children }) => {
     allStudentsMail,
     logout,
     myData,
+    upcomingNotices,
   };
   return (
     <authContext.Provider value={authInfo}>{children}</authContext.Provider>

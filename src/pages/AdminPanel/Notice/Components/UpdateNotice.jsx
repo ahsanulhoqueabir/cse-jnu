@@ -1,10 +1,10 @@
-import React from "react";
-import noticeicon from "../../../assets/noticeicon.json";
-import Lottie from "lottie-react";
-import { timeConvert } from "../../../utility/usefulfuntion";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { authContext } from "../../../../context/AuthProvider";
+import LoadingPage from "../../../Shared/LoadingPage";
+import Headline from "../../../../components/Headline";
 import Swal from "sweetalert2";
-import Banner from "../../../components/Banner";
-import Headline from "../../../components/Headline";
+import { TimeRetrive, timeConvert } from "../../../../utility/usefulfuntion";
 const fields = [
   {
     type: "text",
@@ -18,13 +18,11 @@ const fields = [
     placeholder: "Select the course teacher",
     label: "Select the course teacher",
     options: [
-      "Nayeema Islam",
-      "Shahnaz Parvin",
-      "Dr. Omor Faruk",
-      "Prof. Dr. Md. Nasir Uddin",
-      "Dr. Sajeeb Saha",
-      "Md. Ashraful Islam",
-      "Tanvir Ahammad",
+      "Ahsanul Kabir",
+      "Selina Mam",
+      "Shahidul Islam",
+      "Rahat Khan ",
+      "All Faculty Member",
     ],
   },
   {
@@ -33,15 +31,10 @@ const fields = [
     placeholder: "Select the course",
     label: "Select the course",
     options: [
-      "Data Communication Lab",
-      "Introduction to Statistic and Probability",
-      "Financial and Managerial Accounting",
-      "Digital Logic Design",
-      "Object Oriented Programming-II",
-      "Math- III (Ordinary differential Equation)",
-      "Object Oriented Programming-II Lab",
-      "Data Communication",
-      "Digital Logic Design Lab",
+      "CSE 101",
+      "CSE 102",
+      "CSE 103",
+      "CSE 1208 : Discrete Mathematics",
       "Other",
     ],
   },
@@ -62,16 +55,7 @@ const fields = [
     name: "room",
     placeholder: "Select the room",
     label: "Select the room",
-    options: [
-      "SW Lab-1: Software Lab-1 (5th Floor)",
-      "SW Lab-2: Software Lab-2 (6th Floor)",
-      "Room-721",
-      "Hardware Lab: 5th Floor",
-      "Room-601",
-      "Room-712",
-      "VC Room",
-      "Other",
-    ],
+    options: ["601", "712", "VC Room", "Dream Lab", "Software Lab-1", "Other"],
   },
   {
     type: "text",
@@ -87,7 +71,13 @@ const fields = [
     label: "Write  tags separated by commas(At most 3)",
   },
 ];
-const AddNotice = () => {
+const UpdateNotice = () => {
+  const { loading, upcomingNotices } = useContext(authContext);
+  const [notice, setNotice] = useState({});
+  const { id } = useParams();
+  const currentNotice = upcomingNotices.find((notice) => notice._id === id);
+  // currentNotice.time = TimeRetrive(currentNotice.time);
+  // console.log(currentNotice);
   const handleNotice = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -128,13 +118,16 @@ const AddNotice = () => {
       confirmButtonText: "Yes, add it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch("https://csejnu-server-production.up.railway.app/addNewNotice", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        fetch(
+          `https://csejnu-server-production.up.railway.app/updateNotice/${id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
         fetch("https://csejnu-server-production.up.railway.app/sendMail", {
           method: "POST",
           headers: {
@@ -152,20 +145,21 @@ const AddNotice = () => {
       }
     });
     form.reset();
-    // console.log(data);
+    console.log(data);
   };
+  if (loading) {
+    return <LoadingPage />;
+  }
   return (
-    <section className="min-h-[calc(100vh-150px)] flex flex-col gap-16 lg:flex-row px-5 lg:px-24">
-      <div className="w-[80%]">
-        <Lottie className=" lg:sticky lg:top-5" animationData={noticeicon} />
-      </div>
+    <div>
       <div className="w-full lg:py-20">
-        <Headline>Add New Notice</Headline>
+        <Headline>Update Notice</Headline>
         <form onSubmit={handleNotice} className="">
           <div className="grid grid-cols-1  gap-3">
             {fields.map((field, index) => {
               return field.type === "select" ? (
                 <div
+                  key={index + "-" + field.name}
                   data-aos="zoom-in-up"
                   data-aos-delay="50"
                   data-aos-duration="1000"
@@ -178,12 +172,12 @@ const AddNotice = () => {
                   <select
                     key={index}
                     required
+                    defaultValue={currentNotice[field.name]}
+                    // value={currentNotice[field.name]}
+                    // onChange={(event) => {}}
                     name={field.name}
                     className="w-full placeholder:text-black bg-neutral py-2 px-4 focus:outline-none"
                   >
-                    <option selected disabled hidden>
-                      {field.label}
-                    </option>
                     {field.options.map((option, index) => (
                       <option
                         className="bg-base-100"
@@ -197,6 +191,7 @@ const AddNotice = () => {
                 </div>
               ) : (
                 <div
+                  key={index + "-" + field.name}
                   data-aos="zoom-in-up"
                   data-aos-delay="50"
                   data-aos-duration="1000"
@@ -211,6 +206,16 @@ const AddNotice = () => {
                     key={index}
                     name={field.name}
                     type={field.type}
+                    // value={
+                    //   field.type === "date" || field.type === "time"
+                    //     ? currentNotice[field.name]
+                    //     : undefined
+                    // }
+                    defaultValue={
+                      field.type !== "date" && field.type !== "time"
+                        ? currentNotice[field.name]
+                        : null
+                    }
                     placeholder={field.placeholder}
                     className={`w-full text-base-100 bg-neutral placeholder:text-black px-4 py-3 rounded-md border border-indigo-300 focus:outline-none ${
                       field.type === "textarea" && "min-h-24 col-span-2 p-2"
@@ -223,8 +228,8 @@ const AddNotice = () => {
           <button className="btn my-5 w-full">Submit</button>
         </form>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default AddNotice;
+export default UpdateNotice;
